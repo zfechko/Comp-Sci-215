@@ -1,0 +1,50 @@
+Microsoft Windows [Version 10.0.19042.1466]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\zfech>cd Desktop
+
+C:\Users\zfech\Desktop>mkdir CptS215
+
+C:\Users\zfech\Desktop>cd CptS215
+
+C:\Users\zfech\Desktop\CptS215>mkdir lectures
+
+C:\Users\zfech\Desktop\CptS215>mkdir ma
+
+C:\Users\zfech\Desktop\CptS215>mkdir pa
+
+C:\Users\zfech\Desktop\CptS215>cd ma
+
+C:\Users\zfech\Desktop\CptS215\ma>mkdir MA1
+
+C:\Users\zfech\Desktop\CptS215\ma>cd MA1
+
+C:\Users\zfech\Desktop\CptS215\ma\MA1>copy NUL hello_world.py
+        1 file(s) copied.
+
+C:\Users\zfech\Desktop\CptS215\ma\MA1>cd..
+
+C:\Users\zfech\Desktop\CptS215\ma>cd..
+
+C:\Users\zfech\Desktop\CptS215>tree
+Folder PATH listing for volume OS
+Volume serial number is 324D-949A
+C:.
+├───lectures
+├───ma
+│   └───MA1
+└───pa
+
+C:\Users\zfech\Desktop\CptS215>dir
+ Volume in drive C is OS
+ Volume Serial Number is 324D-949A
+
+ Directory of C:\Users\zfech\Desktop\CptS215
+
+01/13/2022  11:57 AM    <DIR>          .
+01/13/2022  11:57 AM    <DIR>          ..
+01/13/2022  11:57 AM    <DIR>          lectures
+01/13/2022  11:59 AM    <DIR>          ma
+01/13/2022  11:57 AM    <DIR>          pa
+               0 File(s)              0 bytes
+               5 Dir(s)  635,966,275,584 bytes free
