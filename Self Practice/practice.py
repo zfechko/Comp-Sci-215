@@ -14,4 +14,11 @@ practice_list2.append("frachon")
 
 practice_list.extend(practice_list2) # concatenates two lists by appending practice_list2 to the end of practice_list
 
+# practicing taking user input
 
+name = input("What is your name? ")
+print("Nice to meet you", name)
+
+# taking multiple inputs
+num_array = [int(x) for x in input("Enter some numbers").split()] #this formatting makes it so you don't have to use numerous lines to accomplish the same task
+print(num_array)
