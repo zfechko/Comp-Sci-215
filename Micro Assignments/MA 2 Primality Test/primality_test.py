@@ -48,8 +48,8 @@ def run_functions():
     This is a wrapper function that will accept an integer input from the user and then supply that number to the check_if_prime()
     and sum_primes() functions. Contains guard code that makes sure the user inputs an integer that is greater than or equal to 2
     """
-    num = int(0)
-    while num < 2:
+    num = 0
+    while num < 2 and num is not int:
         num = int(input("Enter an integer greater than or equal to 2: "))
     check_if_prime(num)
     sum_primes(num)
