@@ -22,3 +22,12 @@ print("Nice to meet you", name)
 # taking multiple inputs
 num_array = [int(x) for x in input("Enter some numbers").split()] #this formatting makes it so you don't have to use numerous lines to accomplish the same task
 print(num_array)
+
+#practicing making a function with an arbitrary amount of arguments
+def arbitrary_add(*nums):
+    sum = 0
+    for x in range(len(nums)): # functions with arbitrary arguments use tuples as a list so use tuple syntax and not a list
+        sum += nums[x]
+    print(sum)
+
+arbitrary_add(1, 2, 3)
