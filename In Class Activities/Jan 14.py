@@ -36,3 +36,9 @@ b = "215"
 
 print(a + '_' + b) #concatenating the strings
 print(a[3]) #can index the string like an array
+
+c = min(a) # min returns the smallest value in a given string, for "cpts" min would return c
+print(c)
+
+c = max(a) # max does the opposite, returning the largest value in a string
+print(c)

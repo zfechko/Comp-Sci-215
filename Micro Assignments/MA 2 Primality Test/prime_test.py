@@ -18,7 +18,7 @@ def is_prime():
     for x in range(2, num): # the function runs through every number from 2 to the number - 1 because if you include 1 then the function will always say a number isn't prime
         if num % x == 0: # if the current x divides num without any remainder
             not_prime_flag = True #the flag is set to true
-            break # The loop ends as to not take up too much time complexity
+            break # The loop ends as to not take up too much time complexity, even though it's still O(n)
     if not_prime_flag == True: # if the flag is set to true, which means the number isn't prime
         print(num, "is not prime because it is divisible by", x) # prints not prime to the terminal and the first number it is divisible by
     else:
