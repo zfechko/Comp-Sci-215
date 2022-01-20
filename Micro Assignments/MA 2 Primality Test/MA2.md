@@ -36,7 +36,7 @@ Sum of primes from 2 to 17 is 58!
 
 
 ## Assignment Checklist
-- [ ] create `is_prime()` function
-- [ ] create function to display primality to terminal
-- [ ] create function that sums prime numbers in a range
-- [ ] implement guard code to prevent user from inputting a floating point/other invalid value
+- [x] create `is_prime()` function
+- [x] create function to display primality to terminal
+- [x] create function that sums prime numbers in a range and print it to the terminal
+- [x] implement guard code to prevent user from inputting a floating point/other invalid value
