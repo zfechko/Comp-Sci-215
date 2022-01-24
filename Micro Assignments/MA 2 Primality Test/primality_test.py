@@ -8,7 +8,7 @@ Description: This program contains three functions, two for checking that a user
 for finding the sum of all prime numbers up to a user chosen number
 """
 
-from math import sqrt
+from math import sqrt # because sqrt isn't a native python function I imported it from the math module
 
 
 def is_prime(n):
