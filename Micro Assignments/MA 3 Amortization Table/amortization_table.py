@@ -108,6 +108,8 @@ def print_schedule(existing_list):
     """
     for x in range(len(existing_list)):
         for y in range(len(existing_list[x])):
+            if x > 0 and y > 0:
+                print('$', end = '')
             print(existing_list[x][y], end = '\t')
         print('\n')
 
@@ -125,10 +127,12 @@ def main():
     user_loan = Loan(P, R, N)
     regular_list = user_loan.regular_schedule()
     write_regular_to_file(regular_list)
-    print_schedule(regular_list)
+    
 
     accelerated_list = user_loan.accelerated_schedule(additional_payment)
     write_accelerated_to_file(accelerated_list)
+    print_schedule(regular_list)
+    input("Press enter to view the accelerated schedule")
     print_schedule(accelerated_list)
 
 main()
