@@ -7,8 +7,12 @@ Last Updated: Jan 31, 2022
 Description:
 """
 
+
 class Node:
     def __init__(self, data):
+        """
+        Node constructor
+        """
         self.data = data
         self.next = None
         self.prev = None
@@ -123,8 +127,64 @@ class DoublyLinkedList:
 
     def search(self, item):
         """
-        Traverses through the list to check if item is in the list
+        Traverses through the list to check if item is in the list,
         returns true if the item is found, false if it is not
         """
+        cur = self.head
+        found = False
+        while cur is not None:
+            if cur.get_data() == item:
+                found = True
+                break
+            else:
+                cur = cur.get_next()
+        return found
+
+    def insert(self, item, index):
+        """
+        Inserts a node at a given index in the list if it exists
+        """
+        new_node = Node(item)
+        cur = self.head
+        if index == 1:
+            self.add(new_node)
+            return
+        if index > self.size() or index < 1:
+            print("Index does not exist")
+            return
+        else:
+            for x in range(1, index - 1):
+                if cur is not None:
+                    cur = cur.get_next()
+        new_node.set_next(cur.get_next())
+        new_node.set_prev(cur)
+        cur.set_next(new_node)
+        if new_node.get_next() is not None:
+            temp = Node(new_node.get_next())
+            temp.set_prev(new_node)
+
+    def remove(self, item):
+        """
+        Searches the list for an item and deletes it if that item is in the list
+        """
+        cur = self.head
+        while cur is not None:
+            if cur.get_data() == item:
+                if cur == self.head:
+                    self.head = cur.get_next()
+            else:
+                cur = cur.get_next()    
+
+
+
+
+test = DoublyLinkedList()
+test.add(75)
+test.add(93)
+test.add(102)
+print(test)
+test.insert(31, 1)
+print(test)
+
 
     
