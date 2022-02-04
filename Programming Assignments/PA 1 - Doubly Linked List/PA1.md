@@ -23,14 +23,14 @@
         - [x] `__init__(self)`
         - [x] `add(self, item)`
         - [x] `search(self, item)`
-        - [ ] `remove(self, item)`
+        - [x] `remove(self, item)`
         - [x] `size(self)`
         - [x] `is_empty(self)`
         - [x] `__str__(self)`
         - [x] `append(self, item)` (complete but could probably optimize)
-        - [ ] `insert(self, index, item)` (scuffed as hell, should come back to later)
-        - [ ] `pop(self, index=None)`
-        - [ ] `__iter__(self)`
+        - [x] `insert(self, index, item)` 
+        - [x] `pop(self, index=None)`
+        - [x] `__iter__(self)`
 
 The implementation should also have a `main()` function that creates a doubly linked list object, calls its methods with appropriate sample data, and prints the result of each method
 
