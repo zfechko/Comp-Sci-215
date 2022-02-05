@@ -169,7 +169,7 @@ class DoublyLinkedList:
         new_node = Node(item)
         cur = self.head
         if index == 1:
-            self.add(new_node)
+            self.add(item)
             return
         if index > self.size() or index < 1:
             print("Index does not exist")
@@ -246,6 +246,204 @@ class DoublyLinkedList:
         """
         return LLIterator(self.head)
 
+class CDLL:
+    def __init__(self):
+        """
+        Circular doubly linked list constructor
+        """
+        self.head = None
+        self.tail = None
+
+    def __str__(self):
+        """
+        Instructions on how to print the list
+        """
+        cur = self.head
+        list_str = ""
+        while cur:
+            list_str += str(cur.get_data()) + ' <--> '
+            if cur == self.tail:
+                break
+            cur = cur.get_next()
+        return list_str
+
+    def __iter__(self):
+        """
+        Circular linked list iterator
+        """
+        cur = self.head
+        while cur:
+            yield cur
+            cur = cur.get_next()
+            if cur == self.tail.get_next():
+                break
+
+    def is_empty(self):
+        """
+        Returns True if the list is empty, False if it is not
+        """
+        return self.head is None
+
+    def add(self, item):
+        """
+        Inserts a new node at the beginning of the list
+        """
+        new_node = Node(item)
+        if self.head == None:
+            self.head = new_node
+            self.tail = new_node
+        else:
+            self.head.set_prev(new_node)
+            new_node.set_next(self.head)
+            self.head = new_node
+            self.tail.set_next(self.head)
+            self.head.set_prev(self.tail)
+
+    def append(self, item):
+        """
+        Inserts a new node at the end of the list
+        """
+        new_node = Node(item)
+        cur = self.head
+        if self.head is None:
+            self.head = new_node
+            self.tail = new_node
+        else:
+            while cur != self.tail:
+                cur = cur.get_next()
+            cur.set_next(new_node)
+            new_node.set_prev(cur)
+            self.tail = new_node
+            self.tail.set_next(self.head)
+            self.head.set_prev(self.tail)
+    
+    def size(self):
+        """
+        Counts the number of nodes in the list and then returns that amount
+        """
+        cur = self.head
+        count = 0
+        while cur: # includes the tail node in the count
+            count = count + 1
+            if cur == self.tail:
+                break
+            cur = cur.get_next()
+        return count
+
+    def insert(self, item, index):
+        """
+        Inserts a node at a specified index
+        """
+        if index < 1 or index > self.size():
+            print("Index does not exist")
+            return
+        if index == 1:
+            self.add(item)
+        else:
+            new_node = Node(item)
+            cur = self.head
+            for x in range(1, index - 1):
+                cur = cur.get_next()
+            if cur == self.tail:
+                cur.get_prev().set_next(self.head)
+                self.head.set_prev(cur.get_prev())
+                self.tail = cur.get_prev()
+            else:
+                new_node.set_next(cur.get_next())
+                new_node.set_prev(cur)
+                cur.set_next(new_node)
+            
+    def search(self, item):
+        """
+        Traverses through the list to search for a given item, returns True if the item is found,
+        False if it is not
+        """
+        cur = self.head
+        found = False
+        while cur:
+            if cur.get_data() == item:
+                found = True
+                break
+            if cur == self.tail:
+                break
+            else:
+                cur = cur.get_next()
+        return found
+    
+    def remove(self, item):
+        """
+        Searches the list for a given value and deletes it if it exists
+        """
+        if self.is_empty():
+            return
+        cur = self.head
+        found = False
+        while cur and found == False:
+            if cur.get_data() == item:
+                found = True
+                break
+            if cur == self.tail:
+                break
+            else:
+                cur = cur.get_next()
+        if found is True:
+            if cur == self.head:
+                self.tail.set_next(cur.get_next())
+                cur.get_next().set_prev(self.tail)
+                self.head = cur.get_next()
+            elif cur == self.tail:
+                cur.get_prev().set_next(self.head)
+                self.head.set_prev(cur.get_prev())
+                self.tail = cur.get_prev()
+            else:
+                cur.get_prev().set_next(cur.get_next())
+                cur.get_next().set_prev(cur.get_prev())
+            cur.set_next(None)
+            cur.set_prev(None)
+        cur = None
+
+    def pop(self, index = None):
+        """
+        Deletes a node, if index is given, the node at the given index will be deleted if it exists;
+        if no index is given the node at the end of the list is deleted
+        """
+        if self.is_empty():
+            return
+
+        cur = self.head
+        if index is None:
+            while cur != self.tail:
+                cur = cur.get_next()
+            cur.get_prev().set_next(self.head)
+            self.head.set_prev(cur.get_prev())
+            self.tail = cur.get_prev()
+        
+        else:
+            if index < 1 or index > self.size():
+                print("No such index exists")
+                return
+            if index == 1: #delete the head node
+                self.tail.set_next(cur.get_next())
+                cur.get_next().set_prev(self.tail)
+                self.head = cur.get_next()
+            else:
+                for x in range(1, index):
+                    cur = cur.get_next()
+                if cur == self.tail:
+                    cur.get_prev().set_next(self.head)
+                    self.head.set_prev(cur.get_prev())
+                    self.tail = cur.get_prev()
+                else:
+                    cur.get_prev().set_next(cur.get_next())
+                    cur.get_next().set_prev(cur.get_prev())
+                    cur.set_next(None)
+                    cur.set_prev(None)
+        cur = None
+
+
+
+
+
 def main():
     """
     Wrapper function that will demonstrate all of the doubly linked list functions
@@ -255,32 +453,39 @@ def main():
     for x in range(5, 0, -1):
         test.add(x)
         print(test)
+    input("Press enter to move to the next function")
     print('\n')
 
     print("Appending 6 - 10 to the end of the list:")
     for x in range(6, 11):
         test.append(x)
         print(test)
+    input("Press enter to move to the next function")
     print('\n')
 
     print("Is this list empty?", test.is_empty())
+    input("Press enter to move to the next function")
     print('\n')
 
     print("The list is", test.size(), "nodes long.")
+    input("Press enter to move to the next function")
     print('\n')
 
     print("Removing the 5 in the middle of the list")
     test.remove(5)
     print(test)
+    input("Press enter to move to the next function")
     print('\n')
 
     print("Is the 5 in the list?", test.search(5))
+    input("Press enter to move to the next function")
     print('\n')
                 
     print("Putting the 5 back in the middle")
     test.insert(5, 5)
     print(test)
-    print("Is the 5 back in the list?", test.search(1))        
+    print("Is the 5 back in the list?", test.search(5))        
+    input("Press enter to move to the next function")
     print('\n')
 
     print("Popping the last element in the list")
@@ -289,12 +494,69 @@ def main():
     print("Popping the first element in the list")
     test.pop(1)
     print(test)
+    input("Press enter to move to the next function")
+    print('\n')
 
     print("Printing the list using the iterator")
     for item in test:
         print(item, end=', ')
+    input("Press enter to move on to the circular linked list")
+
+    print("Now for the circular doubly linked list")
+    print('\n')
+
+    demoCDLL = CDLL()
+    print("Adding 1-5 to the start of the list")
+    for x in range (5, 0, -1):
+        demoCDLL.add(x)
+        print(demoCDLL)
+    input("Press enter to move to the next function")
+    print('\n')
+
+    print("Appending 6-10 to the end of the list")
+    for x in range(6, 11):
+        demoCDLL.append(x)
+        print(demoCDLL)
+    input("Press enter to move to the next function")
+    print('\n')
+
+    print("Is this list empty?", demoCDLL.is_empty())
+    input("Press enter to move to the next function")
+    print('\n')
+
+    print("The list is", demoCDLL.size(), "nodes long")
+    input("Press enter to move to the next function")
+    print('\n')
+
+    print("Is there a 5 in the list", demoCDLL.search(5))
+    input("Press enter to move to the next function")
+    print('\n')
+
+    print("Let's remove that 5")
+    demoCDLL.remove(5)
+    print("Is there a 5 in the list?", demoCDLL.search(5))
+    print("Let's put the 5 back in the middle of the list")
+    demoCDLL.insert(5, 5)
+    print(demoCDLL)
+    input("Press enter to move to the next function")
+    print('\n')
+
+    print("Popping the last node of the list")
+    demoCDLL.pop()
+    print(demoCDLL)
+    print("Popping the 7th item in the list, which is 7")
+    demoCDLL.pop(7)
+    print(demoCDLL)
+    input("Press enter to move to the next function")
+    print('\n')
+    print("Printing the list using the iterator")
+    for item in demoCDLL:
+        print(item, end=', ')
+
+
             
 main()        
+
 
 
            

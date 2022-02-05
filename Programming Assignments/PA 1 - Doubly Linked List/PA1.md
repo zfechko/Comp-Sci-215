@@ -40,14 +40,14 @@ Create a circular doubly linked list class
     - Fields:
         - head
     - Methods:
-        - [ ] `__init__(self)`
-        - [ ] `add(self, item)`
-        - [ ] `search(self, item)`
-        - [ ] `remove(self, item)`
-        - [ ] `size(self)`
-        - [ ] `is_empty(self)`
-        - [ ] `__str__(self)`
-        - [ ] `append(self, item)`
-        - [ ] `insert(self, index, item)`
-        - [ ] `pop(self, index=None)`
-        - [ ] `__iter__(self)`
+        - [x] `__init__(self)`
+        - [x] `add(self, item)`
+        - [x] `search(self, item)`
+        - [x] `remove(self, item)`
+        - [x] `size(self)`
+        - [x] `is_empty(self)`
+        - [x] `__str__(self)`
+        - [x] `append(self, item)`
+        - [x] `insert(self, index, item)`
+        - [x] `pop(self, index=None)`
+        - [x] `__iter__(self)`
