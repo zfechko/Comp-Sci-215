@@ -24,9 +24,9 @@ Note: Make sure to re-create the linked list with the same numpy ndarray for eac
 
 ### Sorting Routines
 Implement the following sorting routines as either individual functions or as methods of a class
-- [ ] Selection sort
-- [ ] Bubble sort
-- [ ] Insertion sort
+- [x] Selection sort
+- [x] Bubble sort
+- [x] Insertion sort
 - [ ] Shell sort
 
 Each sorting routing should measure execution time, data comparison count, and data swap count metrics
@@ -36,8 +36,8 @@ The program should generate metrics for each combination of the data set and sor
 
 ### Program Flow
 Write a main function that performs the following tasks. Compose the function after checking off the following items
-- [ ] Generate a sample data with one of the configuration combinations (sorted/unsorted config with data size config)
-- [ ] Create linked list with the sample data
-- [ ] Sort the linked list using a sorting routine. It should also measure and return sorting metrics
+- [x] Generate a sample data with one of the configuration combinations (sorted/unsorted config with data size config)
+- [x] Create linked list with the sample data
+- [x] Sort the linked list using a sorting routine. It should also measure and return sorting metrics
 - [ ] Store the results of the sorting metrics temporarily in a Pandas DataFrame, output the sorting metrics to a CSV file
 - [ ] Repeat the process of generating the sample data, creating the list, sorting it, and outputting the metrics for each config

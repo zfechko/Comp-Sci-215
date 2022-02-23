@@ -144,7 +144,7 @@ def selection_sort(list, data_dict):
         
         while cur_j is not None:
             if cur_j.data < cur_sm.data:
-                comparisons += 1
+                comparisons = comparisons + 1
                 cur_sm = cur_j
             cur_j = cur_j.next
             
@@ -153,13 +153,13 @@ def selection_sort(list, data_dict):
             temp = cur_i
             cur_i = cur_sm
             cur_sm = temp
-            swaps += 1
+            swaps = swaps + 1
         cur_i = cur_i.next
     end = time.time()
     runtime = end - start
-    data_dict["Runtime"].append(runtime)
-    data_dict["Data Comparisons"].append(comparisons)
-    data_dict["Data Swaps"].append(swaps)
+    data_dict["Runtime_selection"].append(runtime)
+    data_dict["Data Comparisons_selection"].append(comparisons)
+    data_dict["Data Swaps_selection"].append(swaps)
     
     
 def insertion_sort(list, data_dict):
@@ -170,6 +170,9 @@ def insertion_sort(list, data_dict):
         - Measure of # of swaps
         - Measure of # of comparisons
     """
+    start = time.time()
+    swaps = 0 
+    comparisons = 0
     if list.is_empty() is True: #checks for empty list
         return
     
@@ -178,10 +181,18 @@ def insertion_sort(list, data_dict):
     while front != None:
         back = front.next
         while back != None and back.prev != None and back.data < back.prev.data:
+            comparisons = comparisons + 1
             swap_data(back, back.prev)
+            swaps = swaps + 1
             back = back.prev
         front = front.next
-        
+    end = time.time()
+    runtime = end - start
+    data_dict["Runtime_insertion"].append(runtime)
+    data_dict["Data Swaps_insertion"].append(swaps)
+    data_dict["Data Comparisons_insertion"].append(comparisons)
+    
+    
 def bubble_sort(list, data_dict):
     """
     Performs bubble sort on a doubly linked list
@@ -212,9 +223,9 @@ def bubble_sort(list, data_dict):
             break
     end = time.time()
     runtime = end - start
-    data_dict["Runtime"].append(runtime)
-    data_dict["Data Comparisons"].append(comparisons)
-    data_dict["Data Swaps"].append(swaps)
+    data_dict["Runtime_bubble"].append(runtime)
+    data_dict["Data Comparisons_bubble"].append(comparisons)
+    data_dict["Data Swaps_bubble"].append(swaps)
     
     
 def shell_sort(list):
@@ -235,8 +246,11 @@ def measure_selection_sort(size, sorted_values, random_values, data_dict):
         random_list.append(random_values[x])
         
     selection_sort(ascending_list, data_dict)
+    data_dict["List Size"].append("Ascending Sorted " + str(ascending_list.size()))
     selection_sort(descending_list, data_dict)
+    data_dict["List Size"].append("Descending Sorted " + str(descending_list.size()))
     selection_sort(random_list, data_dict)
+    data_dict["List Size"].append("Random Order " + str(random_list.size()))
 
 def measure_insertion_sort(size, sorted_values, random_values, data_dict):
     ascending_list = DLL()
@@ -249,40 +263,72 @@ def measure_insertion_sort(size, sorted_values, random_values, data_dict):
        random_list.append(random_values[x]) 
 
     insertion_sort(ascending_list, data_dict)
+    data_dict["List Size"].append("Ascending Sorted " + str(ascending_list.size()))
     insertion_sort(descending_list, data_dict)
+    data_dict["List Size"].append("Descending Sorted " + str(descending_list.size()))
     insertion_sort(random_list, data_dict)
+    data_dict["List Size"].append("Random Order " + str(random_list.size()))
+
+def measure_bubble_sort(size, sorted_values, random_values, data_dict):
+    ascending_list = DLL()
+    descending_list = DLL()
+    random_list = DLL()
+    
+    for x in range(1, size + 1):
+       ascending_list.append(sorted_values[x])
+       descending_list.add(sorted_values[x])
+       random_list.append(random_values[x]) 
+
+    bubble_sort(ascending_list, data_dict)
+    data_dict["List Size"].append("Ascending Sorted " + str(ascending_list.size()))
+    bubble_sort(descending_list, data_dict)
+    data_dict["List Size"].append("Descending Sorted " + str(descending_list.size()))
+    bubble_sort(random_list, data_dict)
+    data_dict["List Size"].append("Random Order " + str(random_list.size()))
 
 def main():
     """
     Wrapper function that performs the program flow per the instructions
     """
-    selection_sort_data = {
+       
+    selection_data = {
+            "List Size": [],
+            "Runtime_selection": [],
+            "Data Comparisons_selection": [],
+            "Data Swaps_selection": []
+            }
+    insertion_data = {
+        "List Size": [],
+        "Runtime_insertion": [],
+        "Data Comparisons_insertion": [],
+        "Data Swaps_insertion": []
+            }
+    bubble_data = {
+        "List Size": [],
+        "Runtime_bubble": [],
+        "Data Comparisons_bubble": [],
+        "Data Swaps_bubble": []
+            }
+    shell_data = {
+        "List Size" :[],
         "Runtime": [],
         "Data Comparisons": [],
         "Data Swaps": []
-        }
-    insertion_sort_data = {
-        "Runtime": [],
-        "Data Comparisons": [],
-        "Data Swaps": []
-        }
-    bubble_sort_data = {
-        "Runtime": [],
-        "Data Comparisons": [],
-        "Data Swaps": []
-        }
-    shell_sort_data = {
-        "Runtime": [],
-        "Data Comparisons": [],
-        "Data Swaps": []
-        }
+            }
+   
     sample_size = [250, 500, 1000] #determining the size to be added to the list
     sorted_values = np.arange(1001) #using the max size just to have an array of all values
     random_values = random.randint(1000, size=(1001)) #numpy array of 1500 random numbers from 0-1500
     for value in sample_size:
-        measure_selection_sort(value, sorted_values, random_values, selection_sort_data)
-    print(selection_sort_data)
-            
-    
+        measure_bubble_sort(value, sorted_values, random_values, bubble_data)
+        measure_selection_sort(value, sorted_values, random_values, selection_data)
+        measure_insertion_sort(value, sorted_values, random_values, insertion_data)
+    bubble_df = pd.DataFrame.from_dict(bubble_data).set_index('List Size')
+    selection_df = pd.DataFrame.from_dict(selection_data).set_index('List Size')
+    insertion_df = pd.DataFrame.from_dict(insertion_data).set_index('List Size')
+    merged_df = pd.merge(selection_df, insertion_df, on='List Size')
+    merged_df = pd.merge(merged_df, bubble_df, on='List Size')
+    merged_df = merged_df.sort_index()
+    print(merged_df)
 main()
             
