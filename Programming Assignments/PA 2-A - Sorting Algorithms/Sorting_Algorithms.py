@@ -329,6 +329,7 @@ def main():
     merged_df = pd.merge(selection_df, insertion_df, on='List Size')
     merged_df = pd.merge(merged_df, bubble_df, on='List Size')
     merged_df = merged_df.sort_index()
-    print(merged_df)
+    merged_df.to_csv(r"C:\Users\zfech\Desktop\Comp Sci 215\Programming Assignments\PA 2-A - Sorting Algorithms\sort_results.csv", encoding='utf-8') #this is the only way I got it to work, apologies in advance
+    
 main()
             
