@@ -24,6 +24,9 @@ def swap_data(node_1, node_2):
     node_2.data = temp
     
 def partition(left, right, ll):
+    """
+    Partitions the data as well as swapping data where need be
+    """
     pivot = right.data
     i = left.prev
     j = left
@@ -47,6 +50,9 @@ def partition(left, right, ll):
     return i
 
 def quick_sort_helper(l, h, ll):
+    """
+    Calls the partition function as well as recursive calls
+    """
     if h != None and l != h and l != h.next:
         temp = partition(l, h, ll)
         quick_sort_helper(l, temp.prev, ll)
@@ -90,6 +96,9 @@ def measure_merge_sort(size, sorted_values, random_values, data_dict):
     data_dict["data swaps"].append(random_list.swaps)
     
 def measure_quick_sort(size, sorted_values, random_values, data_dict):
+    """
+    Measures data pertaining to quick sort
+    """
     ascending = linked_list.DLL()
     descending = linked_list.DLL()
     random_list = linked_list.DLL()
@@ -119,6 +128,9 @@ def measure_quick_sort(size, sorted_values, random_values, data_dict):
     
     
 def merge_wrapper(ll):    
+    """
+    Wrapper function to call merge sort properly, helps for gathering runtime
+    """
     ll.head = ll.merge_sort(ll.head)
     
     
