@@ -86,7 +86,9 @@ class DLL:
             self.tail = new_node
             
     def merge(self, first, second):
-        
+        """
+        Merges split lists back together
+        """
         if first is None:
             return second
         if second is None:
@@ -109,6 +111,9 @@ class DLL:
             return second
         
     def split(self, temp_head):
+        """
+        Splits the lists by using one fast pointer and one slow pointer
+        """
         fast = slow = temp_head
         while True:
             if fast.next is None:

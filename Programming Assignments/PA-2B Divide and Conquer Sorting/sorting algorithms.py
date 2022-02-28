@@ -133,13 +133,94 @@ def merge_wrapper(ll):
     """
     ll.head = ll.merge_sort(ll.head)
     
+def graph_descending(df):
+    """
+    Graphs the data for the descending sorted list
+    """
+    x_labels = [250, 500, 1000]
+    x_locs = np.arange(1,4)
+    descending_merge_runtime = pd.Series([df.loc["descending sorted 250", "runtime_merge"],
+                                         df.loc["descending sorted 500", "runtime_merge"],
+                                         df.loc["descending sorted 1000", "runtime_merge"]],
+                                         index=[250, 500, 1000], name="Merge Sort")
+    
+    descending_quick_runtime = pd.Series([df.loc["descending sorted 250", "runtime_quick"],
+                                         df.loc["descending sorted 500", "runtime_quick"],
+                                         df.loc["descending sorted 1000", "runtime_quick"]],
+                                         index=[250, 500, 1000], name="Quick Sort")
+    descending = [descending_merge_runtime, descending_quick_runtime]
+    f, ax = plt.subplots()
+    ax.set_title("Descending Sorted")
+    ax.set_ylabel("Runtime")
+    ax.set_xlabel("List Size N")
+    ax.set_xticklabels(x_labels)
+    ax.set_xticks(x_locs)
+    for series in descending:
+        plt.plot(x_locs, series, label=series.name)
+    plt.legend(loc=0)
+    plt.show()
+
+def graph_random(df):
+    """
+    Graphs random sorted list runtime
+    """
+    x_labels = [250, 500, 1000]
+    x_locs = np.arange(1,4)
+    random_merge_runtime = pd.Series([df.loc["random sorted 250", "runtime_merge"],
+                                         df.loc["random sorted 500", "runtime_merge"],
+                                         df.loc["random sorted 1000", "runtime_merge"]],
+                                         index=[250, 500, 1000], name="Merge Sort")
+    
+    random_quick_runtime = pd.Series([df.loc["random sorted 250", "runtime_quick"],
+                                         df.loc["random sorted 500", "runtime_quick"],
+                                         df.loc["random sorted 1000", "runtime_quick"]],
+                                         index=[250, 500, 1000], name="Quick Sort")
+    random_series = [random_merge_runtime, random_quick_runtime]
+    f, ax = plt.subplots()
+    ax.set_title("Random Sorted")
+    ax.set_ylabel("Runtime")
+    ax.set_xlabel("List Size N")
+    ax.set_xticklabels(x_labels)
+    ax.set_xticks(x_locs)
+    for series in random_series:
+        plt.plot(x_locs, series, label=series.name)
+    plt.legend(loc=0)
+    plt.show()
+    
+def graph_ascending(df):
+    """
+    Graphs ascending sorted list time
+    """
+    x_labels = [250, 500, 1000]
+    x_locs = np.arange(1,4)
+    ascending_merge_runtime = pd.Series([df.loc["ascending sorted 250", "runtime_merge"],
+                                         df.loc["ascending sorted 500", "runtime_merge"],
+                                         df.loc["ascending sorted 1000", "runtime_merge"]],
+                                         index=[250, 500, 1000], name="Merge Sort")
+    
+    ascending_quick_runtime = pd.Series([df.loc["ascending sorted 250", "runtime_quick"],
+                                         df.loc["ascending sorted 500", "runtime_quick"],
+                                         df.loc["ascending sorted 1000", "runtime_quick"]],
+                                         index=[250, 500, 1000], name="Quick Sort")
+    
+    ascending = [ascending_merge_runtime, ascending_quick_runtime]
+    f, ax = plt.subplots()
+    ax.set_title("Ascending Sorted")
+    ax.set_ylabel("Runtime")
+    ax.set_xlabel("List Size N")
+    ax.set_xticklabels(x_labels)
+    ax.set_xticks(x_locs)
+    for series in ascending:
+        plt.plot(x_locs, series, label=series.name)
+    plt.legend(loc=0)
+    plt.show()
     
     
 def main():
     """
     Wrapper function that does all the things that are required in the directions
     """
-    sizes = [250, 500, 1000]
+    sizes = [250, 500, 1000] #recursion depth was exceding the limit so I used the sample sizes from PA-2A
     sorted_values = np.arange(1001)
     random_values = random.randint(1000, size=(1001))
     merge_data = {
@@ -165,51 +246,10 @@ def main():
     combined_df = merge_df.join(quick_df, on='list type', lsuffix='_merge', rsuffix='_quick')
     combined_df.to_csv(r'sorted_results.csv', encoding='utf-8')
     
-    x_labels = [250, 500, 1000]
-    x_locs = np.arange(1,4)
-    descending_merge_runtime = pd.Series([combined_df.loc["descending sorted 250", "runtime_merge"],
-                                         combined_df.loc["descending sorted 500", "runtime_merge"],
-                                         combined_df.loc["descending sorted 1000", "runtime_merge"]],
-                                         index=[250, 500, 1000], name="Merge Sort")
+    graph_ascending(combined_df)
+    graph_descending(combined_df)
+    graph_random(combined_df)
     
-    descending_quick_runtime = pd.Series([combined_df.loc["descending sorted 250", "runtime_quick"],
-                                         combined_df.loc["descending sorted 500", "runtime_quick"],
-                                         combined_df.loc["descending sorted 1000", "runtime_quick"]],
-                                         index=[250, 500, 1000], name="Quick Sort")
-    
-    random_merge_runtime = pd.Series([combined_df.loc["random sorted 250", "runtime_merge"],
-                                         combined_df.loc["random sorted 500", "runtime_merge"],
-                                         combined_df.loc["random sorted 1000", "runtime_merge"]],
-                                         index=[250, 500, 1000], name="Merge Sort")
-    
-    random_quick_runtime = pd.Series([combined_df.loc["random sorted 250", "runtime_quick"],
-                                         combined_df.loc["random sorted 500", "runtime_quick"],
-                                         combined_df.loc["random sorted 1000", "runtime_quick"]],
-                                         index=[250, 500, 1000], name="Quick Sort")
-    
-    random_series = [random_merge_runtime, random_quick_runtime]
-    descending = [descending_merge_runtime, descending_quick_runtime]
-    
-    f, ax = plt.subplots()
-    ax.set_title("Descending Sorted")
-    ax.set_ylabel("Runtime")
-    ax.set_xlabel("List Size N")
-    ax.set_xticklabels(x_labels)
-    ax.set_xticks(x_locs)
-    for series in descending:
-        plt.plot(x_locs, series, label=series.name)
-    plt.legend(loc=0)
-    plt.show()
-    
-    ax.set_title("Random Sorted")
-    ax.set_ylabel("Runtime")
-    ax.set_xlabel("List Size N")
-    ax.set_xticklabels(x_labels)
-    ax.set_xticks(x_locs)
-    for series in random_series:
-        plt.plot(x_locs, series, label=series.name)
-    plt.legend(loc=0)
-    plt.show()
 
 main()
 
