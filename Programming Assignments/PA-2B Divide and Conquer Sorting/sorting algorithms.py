@@ -2,7 +2,7 @@
 Title: Programming Assignment 2-B, Divide and Conquer Sorting Algorithms
 Author: Zach Fechko
 Version: 1.0
-Last Updated: Feb 27, 2022
+Last Updated: Feb 28, 2022
 
 Description: This program uses doubly linked lists to test the efficiency of sorting algorithms
 """
@@ -49,14 +49,14 @@ def partition(left, right, ll):
     ll.swaps += 1
     return i
 
-def quick_sort_helper(l, h, ll):
+def quick_sort_helper(start, end, ll):
     """
     Calls the partition function as well as recursive calls
     """
-    if h != None and l != h and l != h.next:
-        temp = partition(l, h, ll)
-        quick_sort_helper(l, temp.prev, ll)
-        quick_sort_helper(temp.next, h, ll)
+    if end != None and start != end and start != end.next:
+        split_point = partition(start, end, ll)
+        quick_sort_helper(start, split_point.prev, ll)
+        quick_sort_helper(split_point.next, end, ll)
 
 def quick_sort(ll):
     """
@@ -99,21 +99,21 @@ def measure_quick_sort(size, sorted_values, random_values, data_dict):
     """
     Measures data pertaining to quick sort
     """
-    ascending = linked_list.DLL()
+    ascending = linked_list.DLL() #makes 3 linked lists to sort
     descending = linked_list.DLL()
     random_list = linked_list.DLL()
-    for x in range (1, size + 1):
+    for x in range (1, size + 1): #adds the values to each one
         ascending.append(sorted_values[x])
         descending.add(sorted_values[x])
         random_list.append(random_values[x])
         
-    runtime = timeit.timeit(lambda:quick_sort(ascending), number=1)
-    data_dict["list type"].append("ascending sorted " + str(ascending.size()))
-    data_dict["runtime"].append(runtime)
-    data_dict["comparisons"].append(ascending.comparisons)
-    data_dict["data swaps"].append(ascending.swaps)
+    runtime = timeit.timeit(lambda:quick_sort(ascending), number=1) #uses timeit to find the runtime of the function
+    data_dict["list type"].append("ascending sorted " + str(ascending.size())) #adds the list type to the dictionary
+    data_dict["runtime"].append(runtime) #appends the runtime
+    data_dict["comparisons"].append(ascending.comparisons) #appends comparisons
+    data_dict["data swaps"].append(ascending.swaps) #adds the swaps
     
-    runtime = timeit.timeit(lambda:quick_sort(descending), number=1)
+    runtime = timeit.timeit(lambda:quick_sort(descending), number=1) #repeats for the next two lists
     data_dict["list type"].append("descending sorted " + str(descending.size()))
     data_dict["runtime"].append(runtime)
     data_dict["comparisons"].append(descending.comparisons)
@@ -158,6 +158,7 @@ def graph_descending(df):
     for series in descending:
         plt.plot(x_locs, series, label=series.name)
     plt.legend(loc=0)
+    plt.savefig("descending.png")
     plt.show()
 
 def graph_random(df):
@@ -185,7 +186,9 @@ def graph_random(df):
     for series in random_series:
         plt.plot(x_locs, series, label=series.name)
     plt.legend(loc=0)
+    plt.savefig("random.png")
     plt.show()
+    
     
 def graph_ascending(df):
     """
@@ -213,14 +216,16 @@ def graph_ascending(df):
     for series in ascending:
         plt.plot(x_locs, series, label=series.name)
     plt.legend(loc=0)
+    plt.savefig("ascending.png")
     plt.show()
+    
     
     
 def main():
     """
     Wrapper function that does all the things that are required in the directions
     """
-    sizes = [250, 500, 1000] #recursion depth was exceding the limit so I used the sample sizes from PA-2A
+    sizes = [250, 500, 1000] #recursion depth was exceding the limit so I used the sample sizes from PA-2A, I talked to Christian about it and he said it was fine
     sorted_values = np.arange(1001)
     random_values = random.randint(1000, size=(1001))
     merge_data = {
@@ -244,7 +249,7 @@ def main():
    
     
     combined_df = merge_df.join(quick_df, on='list type', lsuffix='_merge', rsuffix='_quick')
-    combined_df.to_csv(r'sorted_results.csv', encoding='utf-8')
+    combined_df.to_csv(r'sorted_results.csv', encoding='utf-8') #I finally got it to work with a relative path 
     
     graph_ascending(combined_df)
     graph_descending(combined_df)
