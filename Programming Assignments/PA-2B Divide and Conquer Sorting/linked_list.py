@@ -136,7 +136,6 @@ class DLL:
             return temp_head
         
         second = self.split(temp_head)
-        
         temp_head = self.merge_sort(temp_head)
         second = self.merge_sort(second)
         
