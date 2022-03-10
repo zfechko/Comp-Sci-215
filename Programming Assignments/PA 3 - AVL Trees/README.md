@@ -5,7 +5,7 @@
 ### Delete operations
 Write a program that implements and tests an AVL tree `delete(data)` method. If the data is in the tree, the method finds the node containing `data`, removes it, and rebalances the tree, returning `True` once it does so. If the data is not in the tree the method returns `False`
 
-Similar to BSTs the `delete(data)` method would ened a recursive `remove(node)` method to remove the node containing the data. It's similar to a BST `remove` method except you need to make sure the tree is balanced as well
+Similar to BSTs the `delete(data)` method would need a recursive `remove(node)` method to remove the node containing the data. It's similar to a BST `remove` method except you need to make sure the tree is balanced as well
 
 
 ### Testing
@@ -28,6 +28,7 @@ mytree.pre_order_traversal()
 
 print("level-order traversal:", end = " ")
 mytree.level_order_traversal()
+#expected output: 122, 115, 132, 111, 121, 131, 321, 315, 415
 
 # no AVL delete implemented!!
 # del mytree[122]
