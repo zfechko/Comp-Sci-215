@@ -25,21 +25,39 @@ class BSTNode:
                     yield elem
 
     def is_left_child(self):
+        """
+        Checks if a node is the left child of its parent
+        """
         return self.parent and self.parent.left == self 
     
     def is_right_child(self):
+        """
+        Checks if a node is the right child of its parent
+        """
         return self.parent and self.parent.right == self
     
     def has_right_child(self):
+        """
+        Checks if a node has a right child
+        """
         return self.right
     
     def has_left_child(self):
+        """
+        Checks if a node has a left child
+        """
         return self.left
     
     def has_both_children(self):
+        """
+        Checks if a node has both children
+        """
         return self.left and self.right
     
     def is_root(self):
+        """
+        Checks if the given node is the root of the tree
+        """
         return not self.parent
     
            

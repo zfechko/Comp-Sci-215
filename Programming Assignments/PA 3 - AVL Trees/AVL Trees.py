@@ -2,13 +2,13 @@
 Title: Programming Assignment 3, AVL Trees
 Author: Zach Fechko
 Version: 1.0
-Last Updated: Mar 8, 2022
+Last Updated: Mar 14, 2022
 
 Description:
 """
 import BST as tree
-#from graphviz import Graph
-#import pydot
+from graphviz import Graph
+import pydot
 
 class AVLTree(tree.BST):
     def __init__(self):
