@@ -4,7 +4,8 @@ Author: Zach Fechko
 Version: 1.0
 Last Updated: Mar 14, 2022
 
-Description:
+Description: Implementation of an AVL tree, inserts sample values and deletes one of the values, 
+and then visualizes the tree with graphviz
 """
 import BST as tree
 from graphviz import Graph
@@ -43,6 +44,14 @@ class AVLTree(tree.BST):
     def rotate_left(self, rot_root):
         """
         Performs left rotation on a given node
+        new root of the subtree is the right child of previous root
+        right child of root is replaced with the left child of the new root
+        adjust the parent references
+        1. if new root has a left child then the new parent of the left child becomes the old root
+        2. if the old root was the root of the entire tree then we set the root of the tree to point to the new root
+           else if the old root is a left child then we change the parent of the left child to point to the new root
+                else we change the parent of the right child to point to the new root
+        3. set the parent of the old root to be the new root
         """
         new_root = rot_root.right
         rot_root.right_child = new_root.left
@@ -64,6 +73,14 @@ class AVLTree(tree.BST):
     def rotate_right(self, rot_root):
         """
         Performs right rotation on a given node
+        new root of the subtree is the right child of previous root
+        right child of root is replaced with the left child of the new root
+        adjust the parent references
+        1. if new root has a left child then the new parent of the left child becomes the old root
+        2. if the old root was the root of the entire tree then we set the root of the tree to point to the new root
+           else if the old root is a left child then we change the parent of the left child to point to the new root
+                else we change the parent of the right child to point to the new root
+        3. set the parent of the old root to be the new root
         """
         new_root = rot_root.left
         rot_root.left = new_root.right
@@ -81,6 +98,7 @@ class AVLTree(tree.BST):
         rot_root.parent = new_root
         rot_root.balance_factor = rot_root.balance_factor - 1 - max(new_root.balance_factor, 0)
         new_root.balance_factor = new_root.balance_factor - 1 + min(rot_root.balance_factor, 0)
+
 
     def rebalance(self, node):
         """
@@ -110,15 +128,22 @@ class AVLTree(tree.BST):
     def update_balance_insert(self, node):
         if node.balance_factor == 0:
             return 
-        elif abs(node.balance_factor) == 1:
+        elif node.balance_factor == +1:
             if node.is_left_child():
                 node.parent.balance_factor += 1
                 self.update_balance_insert(node.parent)
             elif node.is_right_child():
-                node.parent.balance_factor -= 1 
+                node.parent.balance_factor -= 1
+                self.update_balance_insert(node.parent)
+        elif node.balance_factor == -1:
+            if node.is_left_child():
+                node.parent.balance_factor += 1
+                self.update_balance_insert(node.parent)
+            elif node.is_right_child():
+                node.parent.balance_factor -= 1
                 self.update_balance_insert(node.parent)
         elif node.balance_factor == -2:
-            if node.right.balance_factor == -1 :
+            if node.right.balance_factor == -1:
                 self.rotate_left(node)
             else:
                 self.rotate_right(node.right)
@@ -130,7 +155,7 @@ class AVLTree(tree.BST):
                 self.rotate_left(node.left)
                 self.rotate_right(node)
         else:
-            raise Exception("Unhandled case, outside bounds")
+            raise Exception("Unhandled case - Balance factor out of range")
     
     def update_balance(self, node):
         """
@@ -160,14 +185,16 @@ class AVLTree(tree.BST):
             if node.left is None:
                 node.left = tree.BSTNode(data, parent=node)
                 self.size += 1
-                self.update_balance(node.left)
+                node.balance_factor += 1
+                self.update_balance_insert(node)
             else:
                 self._insert(data, node.left)
         elif data > node.data:
             if node.right is None:
                 node.right = tree.BSTNode(data, parent=node)
                 self.size += 1
-                self.update_balance(node.right)
+                node.balance_factor -= 1
+                self.update_balance_insert(node)
             else:
                 self._insert(data, node.right)
 
