@@ -7,7 +7,7 @@ Last Updated: Mar 14, 2022
 Description: Implementation of an AVL tree, inserts sample values and deletes one of the values, 
 and then visualizes the tree with graphviz
 """
-import BST as tree
+import BST as tree #imports binary search tree nodes and methods from BST.py
 from graphviz import Graph
 import pydot
 
