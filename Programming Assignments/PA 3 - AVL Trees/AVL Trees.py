@@ -126,6 +126,10 @@ class AVLTree(tree.BST):
                 self.rotate_right(node)
     
     def update_balance_insert(self, node):
+        """
+        Another version to update balance, this helped me realize that the issue wasn't with my
+        rebalancing code but rather the rotation code
+        """
         if node.balance_factor == 0:
             return 
         elif node.balance_factor == +1:
@@ -160,7 +164,7 @@ class AVLTree(tree.BST):
     def update_balance(self, node):
         """
         Recursively rebalances a tree by calling rebalance() and 
-        updating a node's balance factor
+        updating a node's balance factor and working its way up the tree
         """
         if node.balance_factor > 1 or node.balance_factor < -1:
             self.rebalance(node)
@@ -185,8 +189,7 @@ class AVLTree(tree.BST):
             if node.left is None:
                 node.left = tree.BSTNode(data, parent=node)
                 self.size += 1
-                node.balance_factor += 1
-                self.update_balance_insert(node)
+                self.update_balance(node.left)
             else:
                 self._insert(data, node.left)
         elif data > node.data:
@@ -306,7 +309,7 @@ def main():
     
     testTree.insert(131)
     testTree.insert(121)
-    testTree.insert(122)
+    testTree.insert(122) #this is the one where the tree goes wrong and starts throwing recursion depth errors due to my rotation code
     testTree.insert(132)
     testTree.insert(115)
     testTree.insert(415)
