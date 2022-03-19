@@ -4,6 +4,9 @@ This is just a seperate file for BST so the main py file isn't too big
 """
 class BSTNode:
     def __init__(self, data, left=None, right=None, parent=None):
+        """
+        BST Node constructor
+        """
         self.data = data 
         self.left = left 
         self.right = right 
@@ -65,6 +68,9 @@ class BSTNode:
     
 class BST:
     def __init__(self):
+        """
+        Binary search tree constructor
+        """
         self.root = None 
         self.size = 0 
             

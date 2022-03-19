@@ -2,7 +2,7 @@
 Title: Programming Assignment 3, AVL Trees
 Author: Zach Fechko
 Version: 1.0
-Last Updated: Mar 14, 2022
+Last Updated: Mar 19, 2022
 
 Description: Implementation of an AVL tree, inserts sample values and deletes one of the values, 
 and then visualizes the tree with graphviz
@@ -54,7 +54,7 @@ class AVLTree(tree.BST):
         3. set the parent of the old root to be the new root
         """
         new_root = rot_root.right
-        rot_root.right_child = new_root.left
+        rot_root.right = new_root.left
         if new_root.left != None:
             new_root.left.parent = rot_root
         new_root.parent = rot_root.parent
@@ -93,7 +93,7 @@ class AVLTree(tree.BST):
             if rot_root.is_right_child():
                 rot_root.parent.right = new_root
             else:
-                rot_root.parent.left_ = new_root
+                rot_root.parent.left = new_root
         new_root.right = rot_root
         rot_root.parent = new_root
         rot_root.balance_factor = rot_root.balance_factor - 1 - max(new_root.balance_factor, 0)
@@ -125,41 +125,6 @@ class AVLTree(tree.BST):
                 #CASE 2
                 self.rotate_right(node)
     
-    def update_balance_insert(self, node):
-        """
-        Another version to update balance, this helped me realize that the issue wasn't with my
-        rebalancing code but rather the rotation code
-        """
-        if node.balance_factor == 0:
-            return 
-        elif node.balance_factor == +1:
-            if node.is_left_child():
-                node.parent.balance_factor += 1
-                self.update_balance_insert(node.parent)
-            elif node.is_right_child():
-                node.parent.balance_factor -= 1
-                self.update_balance_insert(node.parent)
-        elif node.balance_factor == -1:
-            if node.is_left_child():
-                node.parent.balance_factor += 1
-                self.update_balance_insert(node.parent)
-            elif node.is_right_child():
-                node.parent.balance_factor -= 1
-                self.update_balance_insert(node.parent)
-        elif node.balance_factor == -2:
-            if node.right.balance_factor == -1:
-                self.rotate_left(node)
-            else:
-                self.rotate_right(node.right)
-                self.rotate_left(node)
-        elif node.balance_factor == +2:
-            if node.left.balance_factor == +1:
-                self.rotate_right(node)
-            else:
-                self.rotate_left(node.left)
-                self.rotate_right(node)
-        else:
-            raise Exception("Unhandled case - Balance factor out of range")
     
     def update_balance(self, node):
         """
@@ -196,8 +161,8 @@ class AVLTree(tree.BST):
             if node.right is None:
                 node.right = tree.BSTNode(data, parent=node)
                 self.size += 1
-                node.balance_factor -= 1
-                self.update_balance_insert(node)
+                #node.balance_factor -= 1
+                self.update_balance(node.right)
             else:
                 self._insert(data, node.right)
 
@@ -247,7 +212,7 @@ class AVLTree(tree.BST):
                 node.right.parent = None
                 self.update_balance(self.root)
         else: #case 3
-            successor = tree.find_successor(node.right)
+            successor = self.find_successor(node.right)
             self.remove(successor)
             successor.parent = node.parent
             if node.parent:
@@ -268,7 +233,8 @@ class AVLTree(tree.BST):
                 
     def delete(self, data):
         """
-        Wrapper function for deleting a value from the tree
+        Wrapper function for deleting a value from the tree,
+        calls remove to actually remove the tree
         """
         if self.size == 1 and self.root.data == data:
             self.root = None
@@ -285,13 +251,20 @@ class AVLTree(tree.BST):
         else:
             return False
             
-    def visualize(self):
-        self.graph = Graph("Courses")
+    def visualize(self, file):
+        """
+        Wrapper function to visualize the AVL tree, uses the visualize_helper
+        function to generate the graph
+        """
+        self.graph = Graph(str(file), format='png')
         self.visualize_helper(self.root)
         self.graph.render(view=True)
         
     
     def visualize_helper(self, node):
+        """
+        Recursive helper function that constructs the graph nodes and the edges
+        """
         if node is not None:
             self.graph.node(str(node.data))
             if node.has_left_child():
@@ -304,42 +277,42 @@ class AVLTree(tree.BST):
             
 
 def main():
+    """
+    Wrapper function that uses the test code provided in the assignment instructions
+    """
     
-    testTree = AVLTree()
+    testTree = AVLTree() #create the tree
     
-    testTree.insert(131)
+    testTree.insert(131) #insert all the values
     testTree.insert(121)
-    testTree.insert(122) #this is the one where the tree goes wrong and starts throwing recursion depth errors due to my rotation code
+    testTree.insert(122) 
     testTree.insert(132)
     testTree.insert(115)
     testTree.insert(415)
-    #testTree.insert(321)
-    #testTree.insert(315)
-    #testTree.insert(111)
+    testTree.insert(321)
+    testTree.insert(315)
+    testTree.insert(111)
     
-    print("Pre-order:", end=' ')
-    #testTree.pre_order_traversal()
+    print("Pre-order:", end=' ') #print the values
+    testTree.pre_order_traversal()
     print('\n')
     
     print("Level order:", end=' ')
     testTree.level_order_traversal()
     
-    print("Balance Factors of the tree's nodes:", end=' ')
-    testTree.level_order_balance()
     
-    #testTree.visualize()
+    testTree.visualize("Inital Tree") #create an image of the initial AVL tree
     
-    del testTree[122]
+    del testTree[122] #delete 122 from the tree
     
-    print("Pre order after deleting 122:", end=' ')
+    print("Pre order after deleting 122:", end=' ') #print the values again
     testTree.pre_order_traversal()
     print('\n')
     
     print("Level order after deleting 122:", end=' ')
     testTree.level_order_traversal()
     
-    print("Balance factors of all the nodes in the tree:", end=' ')
-    testTree.level_order_balance()
+    testTree.visualize("Tree After Deletion") #create an image of the tree after deleting 122
     
     
 

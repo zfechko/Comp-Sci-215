@@ -46,7 +46,3 @@ Visualize the tree using Python `pydot` module
 - Define methods `visualize(file)` and `visualize_helper(node)` methods within the AVLTree class
 - The `visualize(file)` method should initialize the `self.graph` field to a new graph object using `Graph()` constructor method. It should also add root node to the graph plot and call `visualize_helper(node)` with root node as an argument. Finally the the `visualize(file)` should render and save the tree visualization as a png
 - The `visualize(node)` method should recursively add tree nodes and their parent-child relationships (edges) to `self.graph` for visualization
-
-
-### Current Issues
-As of now the only issue with my code is that the left and right references of nodes aren't being updated correctly when the subtree gets rotated
