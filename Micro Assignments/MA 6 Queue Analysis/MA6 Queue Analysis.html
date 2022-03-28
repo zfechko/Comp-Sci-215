@@ -13292,9 +13292,9 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>List size of 1000 0.0006531000001359644 seconds
-List size of 10000 0.0078038999999989755 seconds
-List size of 100000 0.07348359999991771 seconds
+<pre>List size of 1000 0.001039099999957216 seconds
+List size of 10000 0.012053400000013426 seconds
+List size of 100000 0.12445589999998674 seconds
 </pre>
 </div>
 </div>
@@ -13440,9 +13440,9 @@ List size of 100000 0.07348359999991771 seconds
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>1000 1.560000009703799e-05
-10000 9.900000122797792e-06
-100000 7.120000009308569e-05
+<pre>List size of 1000 7.799999991675577e-06 seconds
+List size of 10000 1.0099999997237319e-05 seconds
+List size of 100000 7.149999999001011e-05 seconds
 </pre>
 </div>
 </div>
@@ -13672,9 +13672,9 @@ List size of 100000 0.07348359999991771 seconds
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>1000 9.580000005371403e-05
-10000 7.599999662488699e-06
-100000 6.300000222836388e-06
+<pre>List size of 1000 4.2000000348707545e-06 seconds
+List size of 10000 6.999999982326699e-06 seconds
+List size of 100000 4.199999978027336e-06 seconds
 </pre>
 </div>
 </div>
@@ -13694,6 +13694,7 @@ List size of 100000 0.07348359999991771 seconds
     <span class="n">q</span><span class="o">.</span><span class="n">enqueue</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
 
 <span class="k">while</span> <span class="n">q</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">q</span><span class="o">.</span><span class="n">pop_count</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="n">q</span><span class="o">.</span><span class="n">dequeue</span><span class="p">()</span>
 
 <span class="n">q</span><span class="o">.</span><span class="n">pop_count</span>
@@ -13715,7 +13716,7 @@ List size of 100000 0.07348359999991771 seconds
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>20000</pre>
+<pre>10000</pre>
 </div>
 
 </div>
@@ -13760,9 +13761,9 @@ List size of 100000 0.07348359999991771 seconds
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>1000 9.000000318337698e-07
-10000 9.999999974752427e-07
-100000 1.7999999499807018e-06
+<pre>1000 2.8999999699408363e-06
+10000 3.800000001774606e-06
+100000 7.900000014160469e-06
 </pre>
 </div>
 </div>
