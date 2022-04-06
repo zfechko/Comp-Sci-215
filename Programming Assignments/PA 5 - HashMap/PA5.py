@@ -12,6 +12,9 @@ import re
 
 class HashMap:
     def __init__(self, size=11):
+        """
+        Constructor for a hashmap with default size 11
+        """
         self.size = size
         self.total_count = 0
         #creates a linked list for every index in the list
@@ -22,11 +25,7 @@ class HashMap:
         """
         Returns a string representation of the key-value pairs in the map
         """
-        s =""
-        for slot, key in enumerate(self.key_list):
-            value = self.value_list[slot]
-            s += str(key) + ":" + str(value) + ", "
-        return s
+        self.print_map()
 
     def __len__(self):
         """
@@ -128,6 +127,22 @@ class HashMap:
                 pKey = pKey.next
                 pVal = pVal.next
         return -1
+    
+    def print_map(self):
+        """
+        Prints the hashmap to the screen using the format
+        slot # --> key : value -->
+        """
+        for i in range(len(self.keys)):
+            print(i, end=' ')
+            pKey = self.keys[i].head
+            pVal = self.values[i].head
+            while pKey is not None:
+                print("-->", end=' ')
+                print(pKey.data, ":", pVal.data, end=' ')
+                pKey = pKey.next
+                pVal = pVal.next
+            print()
 
     
 
@@ -156,4 +171,22 @@ def main():
             else:
                 print(user_input, "appears", map.get(user_input).data, "times")
 
+def test_methods():
+    """
+    This is to test methods that aren't used in the main program, like remove.
+    parses the bee movie script, prints the map, deletes "bee" and prints the map again
+    """
+    test = HashMap()
+    with open('bee_movie.txt', "r") as file:
+        for line in file:
+            for word in line.split():
+                s = re.sub(r"[-()\"#/@;:<>{}+=~|.!?,]", "", word.lower())
+                test.insert(s)
+
+    test.print_map()
+    test.remove("bee")
+    print()
+    test.print_map()
+
 main()
+#test_methods()
