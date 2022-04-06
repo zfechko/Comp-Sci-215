@@ -10,13 +10,22 @@ class Node:
 
 class LL:
     def __init__(self):
+        """
+        Singly linked list constructor
+        """
         self.head = None
         self.size = 0
 
     def __len__(self):
+        """
+        Helps the interpreter know what to do when it encounters len(LL)
+        """
         return self.size
 
     def __str__(self):
+        """
+        String representation of the linked list
+        """
         list_str = ""
         cur = self.head
         while cur is not None:
@@ -46,9 +55,9 @@ class LL:
         """
         new_node = Node(data)
         self.size += 1
-        if not self.is_empty():
+        if not self.is_empty(): #if the list is not empty
             cur = self.head
-            while cur.next is not None:
+            while cur.next is not None: #traverse the list until we reach the last node in the list
                 cur = cur.next 
             cur.next = new_node
         else:
@@ -75,8 +84,35 @@ class LL:
                 cur = cur.next
             prev.next = cur.next
             cur.next = None
+        self.size -= 1
 
+    def remove(self, data):
+        """
+        Removes a node in the linked list with a given data value
+        """
+        cur = self.head 
+        prev = None
+        while cur is not None:
+            if cur.data == data:
+                if cur is self.head: #if the node to be deleted is the head of the list
+                    self.head = cur.next #move the head reference to the next node in the list
+                    cur.next = None #unlink the former head
+                    self.size -= 1 #decrement the size value
+                    return
+                else:
+                    prev.next = cur.next 
+                    cur.next = None
+                    self.size -= 1
+                    return 
+            prev = cur 
+            cur = cur.next
+        
+            
     def search(self, value) -> int:
+        """
+        Searches the list for a node with a given value and returns the position if it exists, 
+        otherwise it returns -1
+        """
         position = 0
         cur = self.head 
         while cur is not None:
