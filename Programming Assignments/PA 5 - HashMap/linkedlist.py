@@ -5,6 +5,9 @@ This file is for the implementation of a linked list so the main .ipynb file doe
 
 class Node:
     def __init__(self, data):
+        """
+        Node constructor for Singly Linked list, no methods needed
+        """
         self.data = data
         self.next = None 
 
@@ -122,10 +125,4 @@ class LL:
             cur = cur.next
         return -1
           
-    def at(self, position):
-        """
-        Returns the value at that position in the linked list
-        """
-        cur = self.head
-        index = 0
         

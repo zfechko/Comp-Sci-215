@@ -23,9 +23,22 @@ class HashMap:
 
     def __str__(self):
         """
-        Returns a string representation of the key-value pairs in the map
+        Returns a string representation of the key-value pairs in the map.
+        Prints in the format
+        slot # --> key:value -->
         """
-        self.print_map()
+        s = ""
+        for i in range(len(self.keys)):
+            s += str(i) + ' '
+            pKey = self.keys[i].head
+            pVal = self.values[i].head
+            while pKey is not None:
+                s += "-->" + ' '
+                s+= str(pKey.data) + ":"+ str(pVal.data) + ' ' 
+                pKey = pKey.next
+                pVal = pVal.next
+            s += '\n'
+        return s
 
     def __len__(self):
         """
@@ -113,37 +126,20 @@ class HashMap:
     def remove(self, key):
         """
         removes the key-value pair from the map and returns the slot position. 
-        IF the key is not found, -1 gets returned
+        If the key is not found, -1 gets returned
         """
-        slot = self.hash_function(key)
+        slot = self.hash_function(key) #find the slot where the key is in the list
         if not self.keys[slot].is_empty() and not self.values[slot].is_empty(): #if the linked lists at the slots in the hashmap aren't empty
             pKey = self.keys[slot].head
             pVal = self.values[slot].head
             while pKey is not None: #using pKey here because we're looking for the string key, don't have to use pVal because parallel traversal
                 if pKey.data == key:
-                    self.keys[slot].remove(key)
+                    self.keys[slot].remove(key) #use the linked list remove method to delete the items
                     self.values[slot].remove(pVal.data)
                     return slot
                 pKey = pKey.next
                 pVal = pVal.next
         return -1
-    
-    def print_map(self):
-        """
-        Prints the hashmap to the screen using the format
-        slot # --> key : value -->
-        """
-        for i in range(len(self.keys)):
-            print(i, end=' ')
-            pKey = self.keys[i].head
-            pVal = self.values[i].head
-            while pKey is not None:
-                print("-->", end=' ')
-                print(pKey.data, ":", pVal.data, end=' ')
-                pKey = pKey.next
-                pVal = pVal.next
-            print()
-
     
 
 def main():
@@ -159,7 +155,7 @@ def main():
                 s = re.sub(r"[-()\"#/@;:<>{}+=~|.!?,]", "", word.lower())
                 map.insert(s)
     
-    print("There are", map.total_count, "words in the text")
+    print("There are", map.total_count, "words in", file_input)
 
     while not terminated:
         user_input = str(input("Enter a word to search for, or enter 'Q' or 'q' to quit: "))
@@ -167,7 +163,7 @@ def main():
             terminated = True
         else:
             if user_input not in map:
-                print("word not found")
+                print(user_input, "not found")
             else:
                 print(user_input, "appears", map.get(user_input).data, "times")
 
@@ -183,10 +179,10 @@ def test_methods():
                 s = re.sub(r"[-()\"#/@;:<>{}+=~|.!?,]", "", word.lower())
                 test.insert(s)
 
-    test.print_map()
+    print(test)
     test.remove("bee")
     print()
-    test.print_map()
+    print(test)
 
 main()
-#test_methods()
+#test_methods() feel free to uncomment this and run it to see the functions
