@@ -9,6 +9,10 @@ I collaborated on this assignment with Anthony Ghimpu
 
 import linkedlist
 import re 
+from rich import Console
+from rich import inspect
+from pyfiglet import Figlet
+from termcolor import colored
 
 class HashMap:
     def __init__(self, size=11):
@@ -111,12 +115,12 @@ class HashMap:
         If the key is not present in the map, -1 is returned
         """
         slot = self.hash_function(key)
-        if not self.keys[slot].is_empty() and not self.values[slot].is_empty():
-            pKey = self.keys[slot].head
+        if not self.keys[slot].is_empty() and not self.values[slot].is_empty(): #if the corresponding slot isn't empty in both lists
+            pKey = self.keys[slot].head #create a pointer to the head of each list
             pVal = self.values[slot].head
             while pKey is not None:
-                if pKey.data == key:
-                    self.keys[slot].search(key)
+                if pKey.data == key: #if the current key node matches the specified key
+                    self.keys[slot].search(key) #use linked list search method to find the position of the given node
                     self.values[slot].search(pVal.data)
                     return pVal
                 pKey = pKey.next
@@ -147,6 +151,7 @@ def main():
     Wrapper function to carry out assignment instructions
     """
     map = HashMap() 
+    console = Console()
     terminated = False #bool value to create a semi-infinte loop
     file_input = str(input("Enter the name of a file you would like to open: "))
     with open(file_input, "r") as file:
@@ -163,9 +168,9 @@ def main():
             terminated = True
         else:
             if user_input not in map:
-                print(user_input, "not found")
+                console.print(user_input, "not found", style='red')
             else:
-                print(user_input, "appears", map.get(user_input).data, "times")
+                console.print(user_input, "appears", map.get(user_input).data, "times", style='green')
 
 def test_methods():
     """
@@ -173,16 +178,21 @@ def test_methods():
     parses the bee movie script, prints the map, deletes "bee" and prints the map again
     """
     test = HashMap()
+    f = Figlet(font='banner3-D')
+    
     with open('bee_movie.txt', "r") as file:
         for line in file:
             for word in line.split():
                 s = re.sub(r"[-()\"#/@;:<>{}+=~|.!?,]", "", word.lower())
                 test.insert(s)
 
+    print(colored(f.renderText('Initial Map'), 'green'))
     print(test)
     test.remove("bee")
-    print()
+    print(colored(f.renderText('Post Deletion'), 'blue'))
     print(test)
+    
+    inspect(test, methods=True)
 
 main()
-#test_methods() feel free to uncomment this and run it to see the functions
+#test_methods() #feel free to uncomment this and run it to see the functions

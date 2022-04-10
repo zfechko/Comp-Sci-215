@@ -71,10 +71,10 @@ class LL:
         Removes a node at a specified index, if index is not given it deletes the end node
         """
         cur = self.head
-        if index is None:
-            while cur.next.next is not None:
-                cur = cur.next
-            cur.next = None
+        if index is None: #if index isn't given
+            while cur.next.next is not None: #traverse to the second to last node
+                cur = cur.next 
+            cur.next = None #unlink the end node
         else:
             position = 0
             prev = None
