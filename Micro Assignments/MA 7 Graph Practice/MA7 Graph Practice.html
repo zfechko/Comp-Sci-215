@@ -13805,8 +13805,7 @@ The string representation should only show the edges that are present in the gra
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">vert_list</span><span class="p">:</span> <span class="c1">#if the vertex is not in the list</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">vert_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="c1">#append the key to the vertex list</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">vert_list</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">adj_matrix</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">adj_matrix</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">vert_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">key</span><span class="p">)],</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vert_list</span><span class="p">))])</span> <span class="c1">#create a new list with 0s at the given index</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">adj_matrix</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vert_list</span><span class="p">))])</span> <span class="c1">#create a new list with 0s </span>
             <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">adj_matrix</span><span class="p">:</span> <span class="c1">#interate through all the rows in the adj_matrix</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vert_list</span><span class="p">):</span> <span class="c1">#if the list isn&#39;t the right length</span>
                     <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vert_list</span><span class="p">):</span>
@@ -13859,15 +13858,8 @@ The string representation should only show the edges that are present in the gra
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">()</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Adding vertices with 3 and 4 swapped to test if my method of sorting works</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="n">g</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">g</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">g</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<span class="n">g</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">g</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">g</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">):</span> <span class="c1">#add vertices to the graph</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">vert_list</span><span class="p">)</span>
 
@@ -13900,24 +13892,24 @@ The string representation should only show the edges that are present in the gra
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[1, 2, 4, 3, 5, 6]
+<pre>[1, 2, 3, 4, 5, 6]
 
 [0, 1, 0, 0, 1, 0]
-[1, 0, 0, 1, 0, 0]
-[0, 0, 0, 1, 1, 1]
-[0, 1, 1, 0, 0, 0]
 [1, 0, 1, 0, 0, 0]
-[0, 0, 1, 0, 0, 0]
+[0, 1, 0, 1, 0, 0]
+[0, 0, 1, 0, 1, 1]
+[1, 0, 0, 1, 0, 0]
+[0, 0, 0, 1, 0, 0]
 
 (1, 2)
 (1, 5)
 (2, 1)
 (2, 3)
+(3, 2)
+(3, 4)
 (4, 3)
 (4, 5)
 (4, 6)
-(3, 2)
-(3, 4)
 (5, 1)
 (5, 4)
 (6, 4)
