@@ -9,7 +9,7 @@ I collaborated on this assignment with Anthony Ghimpu
 
 import linkedlist
 import re 
-from rich import Console
+from rich.console import Console
 from rich import inspect
 from pyfiglet import Figlet
 from termcolor import colored
