@@ -4,4 +4,10 @@ st.write("""
 Hello *World!*
 """)
 
-st.radio('Radio', [1,2,3])
+st.write("""
+## This is how streamlit works
+""")
+
+name = st.text_input("What is your name")
+
+st.text(name)
