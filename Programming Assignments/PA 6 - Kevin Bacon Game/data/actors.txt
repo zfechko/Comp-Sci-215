@@ -1,4 +1,3 @@
-Actor ID|Actor Name
 2|Tim Allen
 3|Tom Hanks
 4|Don Rickles
