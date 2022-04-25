@@ -3,10 +3,5 @@
 ## Assignment Instructions
 
 ## Assignment Notes
-The way the text files are structured are
-- actors.txt
-    - Actor ID | Actor name
-- movies.txt
-    - Movie ID | Movie title
-- movie-actors.txt
-    - movie ID | actor ID
+Ways to keep track of kevin bacon numbers/path length:
+- Create a dictionary on game start and with each actor that is searched for, add a key value pair of actor name and kb number
