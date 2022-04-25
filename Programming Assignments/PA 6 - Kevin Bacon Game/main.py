@@ -22,7 +22,7 @@ def main():
         if choice == "return":
             print("thanks for playing! See you later!")
             ended = True 
-        else:
+        elif choice != "":
             clear()
             game.print_results(choice)
             game.graph_results(choice)

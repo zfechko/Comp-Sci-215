@@ -2,6 +2,8 @@ from graph import Graph
 import networkx as nx
 import matplotlib.pyplot as plt
 import graphviz as gv
+from rich import print
+from rich.panel import Panel
 
 class Game:
     """
@@ -16,7 +18,7 @@ class Game:
         """
         Prints the rules of the game and prompts the user to hit enter to start
         """
-        print("Welcome to the Kevin Bacon game! Where you get to see the chain that connects one actor to Kevin Bacon!")
+        print(Panel("Welcome to the Kevin Bacon game! Where you get to see the chain that connects one actor to Kevin Bacon!"))
         input("Press enter to start!")
 
     def print_results(self, actor: str):
@@ -42,8 +44,8 @@ class Game:
         if actor.title() in self.g.actors.values() or actor.lower() == "return":
             return actor
         else:
-            print("Actor not valid")
-            return
+            print("[bold red]Actor not valid[/bold red]")
+            return ""
 
     def graph_results(self, actor: str):
         """
@@ -70,6 +72,7 @@ class Game:
         axis.set_xlim([1.2*x for x in axis.get_xlim()])
         axis.set_ylim([1.2*y for y in axis.get_ylim()])
         plt.tight_layout()
+        plt.title("Close the figure to continue the game")
         plt.show()
         
 
