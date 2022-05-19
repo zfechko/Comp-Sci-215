@@ -1,4 +1,7 @@
 import streamlit as st
+import time
+
+
 st.write("""
 # My first app
 Hello *World!*
@@ -10,4 +13,5 @@ st.write("""
 
 name = st.text_input("What is your name")
 
-st.text(name)
+st.write(name)
+
